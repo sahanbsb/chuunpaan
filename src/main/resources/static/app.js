@@ -66,7 +66,7 @@ function connectToSell() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        setInterval(sendData, 1000);
+        setTimeout(sendData, 1000);
     });
 }
 
@@ -76,6 +76,7 @@ function showPosition(position) {
         mymap.removeLayer(marker);
     }
     marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
+    setTimeout(sendData, 1000);
 }
 
 function sendData() {
