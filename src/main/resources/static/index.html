@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Chuun Paan</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
 </head>
 <body>
 <h1>Welcome to Choon Paan</h1>
+<button id="btn_buy">Buy</button>
+<button id="btn_sell">Sell</button>
+<form id="seller_info">
+    <label for="input_name">Name :</label>
+    <input type="text" id="input_name"><br>
+    <label for="input_message">Message :</label>
+    <input type="text" id="input_message"><br>
+    <button id="btn_seller_info">Submit</button>
+</form>
+<div id="mapid" style="height: 500px;"></div>
 </body>
 </html>
