@@ -10,6 +10,7 @@ public class Seller {
 
     private double lat;
     private double lon;
+    private double acc;
     private String name;
     private String message;
 }

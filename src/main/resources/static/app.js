@@ -1,9 +1,11 @@
 var stompClient = null;
 var mymap = null;
 var sellers = {};
+var circles = {};
 var name = null;
 var message = null;
 var marker = null;
+var circle = null;
 
 function initBuy() {
     $("#btn_buy").hide();
@@ -71,11 +73,15 @@ function connectToSell() {
 }
 
 function showPosition(position) {
-    stompClient.send("/app/sellerLocation", {}, JSON.stringify({"lat":position.coords.latitude, "lon":position.coords.longitude, "name":name, "message":message}));
+    stompClient.send("/app/sellerLocation", {}, JSON.stringify({"lat":position.coords.latitude, "lon":position.coords.longitude, "acc":position.coords.accuracy, "name":name, "message":message}));
     if (marker) {
         mymap.removeLayer(marker);
     }
+    if (circle) {
+        mymap.removeLayer(circle);
+    }
     marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
+    circle = L.circle([position.coords.latitude, position.coords.longitude], position.coords.accuracy).addTo(mymap);
     setTimeout(sendData, 1000);
 }
 
@@ -89,7 +95,11 @@ function showSeller(seller) {
     if (sellers[seller.id]) {
         mymap.removeLayer(sellers[seller.id]);
     }
+    if (circles[seller.id]) {
+        mymap.removeLayer(circles[seller.id]);
+    }
     sellers[seller.id] =  L.marker([seller.lat, seller.lon]).addTo(mymap).bindPopup("<h3>" + seller.name + "</h3><br><p>" + seller.message + "</p>");
+    circles[seller.id] = L.circle([seller.lat, seller.lon], seller.acc).addTo(mymap);
 }
 
 $(function () {
