@@ -6,11 +6,11 @@ var name = null;
 var message = null;
 var marker = null;
 var circle = null;
+var firstLocation = true;
 
 function initBuy() {
     $("#btn_buy").hide();
     $("#btn_sell").hide();
-    $("#mapid").show();
     initMap();
     connectToBuy();
 }
@@ -25,12 +25,13 @@ function initSell() {
     name = $("#input_name").val();
     message = $("#input_message").val();
     $("#seller_info").hide();
-    $("#mapid").show();
     initMap();
     connectToSell();
 }
 
 function initMap() {
+    $("#title").hide();
+    $("#mapid").show();
     mymap = L.map('mapid').setView([7.623037, 80.651205], 8);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -87,7 +88,14 @@ function showPosition(position) {
 
 function sendData() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        if (firstLocation) {
+            firstLocation = false;
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            navigator.geolocation.getCurrentPosition(showPosition,
+                function error(msg) {alert('Please enable your GPS position feature.');},
+                {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
+        }
     }
 }
 
