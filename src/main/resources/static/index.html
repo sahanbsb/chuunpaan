@@ -14,31 +14,26 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div style="text-align: center;">
+<div style="text-align: center;" class="form-container">
     <h1 id="title"> Welcome to Chuun Paan </h1>
-    <button id="btn_buy">Buy</button>
-    <button id="btn_sell">Sell</button>
-    <form id="seller_info">
-        <table>
-            <tr>
-                <td>
-                    <label for="input_name">Name :</label>
-                </td>
-                <td>
-                    <input type="text" id="input_name"><br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="input_message">Message :</label>
-                </td>
-                <td>
-                    <input type="text" id="input_message"><br>
-                </td>
-            </tr>
-        </table>
+    <button id="btn_buy">BUY</button>
+    <button id="btn_sell">SELL</button>
+    <form id="seller_info" autocomplete="off">
+        <div class="input-container">
+            <input type="text" id="input_name" class="input">
+            <label for="input_name" class="input-label">Name</label>            
+            <span class="focus-border"></span>
+        </div>
+        <div class="input-container">            
+            <input type="text" id="input_message" class="input">
+            <label for="input_message" class="input-label" >Message</label>
+            <span class="focus-border"></span>
+        </div>        
         <button id="btn_seller_info">Submit</button>
     </form>
 </div>
