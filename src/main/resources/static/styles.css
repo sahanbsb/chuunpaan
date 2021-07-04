@@ -11,6 +11,8 @@ body {
     rgba(249, 252, 169, 1) 100%
   );
   font-family: "Roboto", sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 .form-container {
@@ -114,13 +116,14 @@ td {
   padding: 10px;
 }
 
-body {
-  padding: 0;
-  margin: 0;
-}
 html,
 body,
 #mapid {
   height: 100%;
   width: 100%;
+}
+
+#mapid {
+  position: absolute;
+  top: 0;
 }
