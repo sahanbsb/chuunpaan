@@ -13,6 +13,7 @@ public class ChuunPaanController {
     @SendTo("/topic/sellerLocations")
     public Seller updateSellerLocation(Seller seller, StompHeaderAccessor stompHeaderAccessor) {
         seller.setId((String) stompHeaderAccessor.getHeader("simpSessionId"));
+        seller.setEventType(Seller.EventType.UPDATE);
         return seller;
     }
 }
