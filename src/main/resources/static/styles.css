@@ -127,3 +127,13 @@ body,
   position: absolute;
   top: 0;
 }
+
+#notification {
+  z-index:500;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  text-align:center;
+  background-color: aquamarine;
+}

@@ -1,6 +1,5 @@
 var stompClient = null;
 var mymap = null;
-var firstLocation = true;
 
 // for buyer
 var sellers = {};
@@ -12,6 +11,7 @@ var message = null;
 var marker = null;
 var circle = null;
 var lastCoords = null;
+var positionTimeout = 5000;
 
 function initBuy() {
     $("#btn_buy").hide();
@@ -79,17 +79,28 @@ function connectToSell() {
 }
 
 function updatePosition(position) {
-    if (lastCoords) {
-        // accuracy is actually error
-        if (position.coords.accuracy < lastCoords.accuracy 
-            || getDistanceFromLatLonInKm(lastCoords.latitude, lastCoords.longitude, position.coords.latitude, position.coords.longitude) > 0.01) {
-            sendPosition(position);
+    hideNotification();
+    if (position.coords.accuracy > 1000) {
+        if (positionTimeout < 600000) {
+            console.log("Not enough accuracy. Increasing timeout.");
+            positionTimeout = positionTimeout + 5000;
+            initSendingData();
+        } else {
+            showNotification("Failed to get location with enough accuracy.", false);
         }
     } else {
-        sendPosition(position);
+        if (lastCoords) {
+            // accuracy is actually error
+            if (position.coords.accuracy < lastCoords.accuracy
+                || getDistanceFromLatLonInKm(lastCoords.latitude, lastCoords.longitude, position.coords.latitude, position.coords.longitude) > 0.01) {
+                sendPosition(position);
+            }
+        } else {
+            sendPosition(position);
+        }
+        updatePositionOnMap(position);
+        setTimeout(initSendingData, 1000);
     }
-    updatePositionOnMap(position);
-    setTimeout(initSendingData, 1000);
 }
 
 function sendPosition(position) {
@@ -106,6 +117,7 @@ function sendPosition(position) {
             }
         )
     );
+    showNotification("Position sent.", true);
 }
 
 function updatePositionOnMap(position) {
@@ -121,14 +133,21 @@ function updatePositionOnMap(position) {
 
 function initSendingData() {
     if (navigator.geolocation) {
-        if (firstLocation) {
-            firstLocation = false;
-            navigator.geolocation.getCurrentPosition(updatePosition);
-        } else {
-            navigator.geolocation.getCurrentPosition(updatePosition,
-                function error(msg) {console.log("Error occurred while getting current position : " + msg)},
-                {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
-        }
+        navigator.geolocation.getCurrentPosition(updatePosition,
+                        locationError,
+                        {maximumAge:5000, timeout:positionTimeout, enableHighAccuracy: true});
+        showNotification("Waiting for location...", false);
+    }
+}
+
+function locationError(error) {
+    if (error.code == 3 && positionTimeout < 600000) {
+        console.log("Location timed out. Increasing timeout.")
+        positionTimeout = positionTimeout + 5000;
+        initSendingData();
+    } else {
+        console.log("Problem occurred while getting the location.<br>" + error.message);
+        showNotification("Problem occurred while getting the location.<br>" + error.message, false);
     }
 }
 
@@ -165,12 +184,25 @@ function deg2rad(deg) {
 }
 // up to here
 
+function showNotification(msg, autoHide) {
+    $("#notification").html(msg);
+    $("#notification").show();
+    if (autoHide) {
+        setTimeout(function () {$("#notification").hide();}, 1000);
+    }
+}
+
+function hideNotification() {
+    $("#notification").hide();
+}
+
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
     $("#seller_info").hide();
     $("#mapid").hide()
+    $("#notification").hide();
     $( "#btn_sell" ).click(goToSellerInfo);
     $( "#btn_buy" ).click(initBuy);
     $("#btn_seller_info").click(initSell)
