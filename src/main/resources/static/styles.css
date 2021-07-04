@@ -1,58 +1,126 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 body {
-    background-color: lightgreen;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 219, 8, 1) 0%,
+    rgba(214, 184, 7, 1) 0%,
+    rgba(249, 252, 169, 1) 100%
+  );
+  font-family: "Roboto", sans-serif;
+}
+
+.form-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-container {
+  position: relative;
+  padding: 20px 0;
+  margin: 10px 0;
+}
+
+.input ~ .focus-border {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #6a00f4;
+  transition: 0.3s;
+}
+.input:focus ~ .focus-border {
+  width: 400px;
+  transition: 0.43;
+  left: 10px;
+}
+
+.input:focus ~ .input-label {
+  color: #6a00f4;
+}
+
+.input-label {
+  position: absolute;
+  position: absolute;
+  top: 0;
+  left: 12px;
+  font-size: small;
+  transition: 0.3s;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 1em;
 }
 
 button {
-    height: 50px;
-    font-size: 30px;
-    border-radius: 10px;
-    width: 40%;
-    margin: 10px;
+  height: 50px;
+  font-size: 30px;
+  border-radius: 10px;
+  background-color: #f4af00;
+  color: white;
+  width: 400px;
+  margin: 10px;
+  border: none;
+  font-size: medium;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-label {
-    font-size: 30px;
+button:hover {
+  background-color: #c08a01;
+}
+
+button:focus {
+  background-color: #c08a01;
+  outline: none;
 }
 
 td:first-child {
-    text-align: right;
+  text-align: right;
 }
 
 td:last-child {
-    text-align: left;
+  text-align: left;
 }
 
 input {
-    font-size: 30px;
-    width: 100%;
-    border-radius: 10px;
+  font-size: 1.1em;
+  width: 400px;
+  background-color: #ffffff00;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #0000005c;
+  padding-bottom: 5px;
 }
 
 table {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-th, td {
-    padding: 10px;
-}
-
-@media only screen and (max-width: 980px) {
-    body {
-        background-color: lightblue;
-    }
-
-    button {
-        width: 80%;
-    }
+th,
+td {
+  padding: 10px;
 }
 
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
-html, body, #mapid {
-    height: 100%;
-    width: 100%;
+html,
+body,
+#mapid {
+  height: 100%;
+  width: 100%;
 }
