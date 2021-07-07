@@ -12,3 +12,7 @@ chuunpaan locator
 * jar file will be created in target folder
 * To run the jar `java - jar target/core-*.jar`
 * Go to http://localhost:8081 in a web browser
+
+# Live deployment
+
+* Deployed on Heroku at https://chuunpaan.herokuapp.com/
