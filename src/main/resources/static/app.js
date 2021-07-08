@@ -129,6 +129,7 @@ function updatePositionOnMap(position) {
     }
     marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap)
     circle = L.circle([position.coords.latitude, position.coords.longitude], position.coords.accuracy).addTo(mymap);
+    mymap.setView([position.coords.latitude, position.coords.longitude], 18);
 }
 
 function initSendingData() {
