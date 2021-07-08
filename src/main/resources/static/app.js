@@ -135,7 +135,7 @@ function initSendingData() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(updatePosition,
                         locationError,
-                        {maximumAge:5000, timeout:positionTimeout, enableHighAccuracy: true});
+                        {maximumAge:0, timeout:positionTimeout, enableHighAccuracy: true});
         showNotification("Waiting for location...", false);
     }
 }
